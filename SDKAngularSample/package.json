@@ -1,16 +1,21 @@
 {
-  "name": "bot-rh-gui",
-  "version": "0.1.0",
-  "license": "MIT",
+  "name": "sdk-angular-sample",
+  "version": "1.0.0",
+  "license": "ISC",
+  "description": "Rainbow Web SDK Angular 2+ Sample",
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "postinstall": "cp ./node_modules/rainbow-web-sdk//dist/lib/vendors-sdk.min.js ./src/assets/ && cp ./node_modules/rainbow-web-sdk//dist/lib/rainbow-sdk.min.js ./src/assets/"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rainbow-CPaaS/Angular-Samples.git"
+  },
   "dependencies": {
     "@angular/animations": "^8.0.0",
     "@angular/common": "^8.0.0",
