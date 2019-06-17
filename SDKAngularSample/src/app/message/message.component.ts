@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { timer } from 'rxjs';
 import * as moment from 'moment';
 
@@ -7,10 +7,11 @@ import * as moment from 'moment';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, OnDestroy {
 
   @Input() message: any;
   date: any;
+  subscribe: any;
 
   constructor() { }
 
@@ -18,7 +19,7 @@ export class MessageComponent implements OnInit {
 
     const updateDateFields = timer(0, 30000);
 
-    const subscribe = updateDateFields.subscribe(n => {
+    this.subscribe = updateDateFields.subscribe(n => {
       const mdate = moment(this.message.date);
 
       if (moment().diff(mdate, 'days') === 0) {
@@ -27,6 +28,10 @@ export class MessageComponent implements OnInit {
         this.date =  mdate.format('lll');
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscribe.unsubscribe();
   }
 
 }
