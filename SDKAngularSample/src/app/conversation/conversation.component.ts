@@ -6,29 +6,29 @@ declare var rainbowSDK: any;
 declare var $: any;
 
 @Component({
-  selector: 'app-conversation',
-  templateUrl: './conversation.component.html',
-  styleUrls: ['./conversation.component.css']
+    selector: 'app-conversation',
+    templateUrl: './conversation.component.html',
+    styleUrls: ['./conversation.component.css']
 })
 export class ConversationComponent implements OnInit, OnDestroy {
 
-  @Input() conversation: any;
-  @ViewChild('conv', { static: false}) conv: ElementRef;
-  contact: any;
-  handlers: any[];
-  subscription: Subscription;
-  message: string;
+    @Input() conversation: any;
+    @ViewChild('conv', {static: false}) conv: ElementRef;
+    contact: any;
+    handlers: any[];
+    subscription: Subscription;
+    message: string;
 
-  constructor(private messageService: MessageService, private renderer: Renderer2) {
-    this.subscription = this.messageService.getMessage().subscribe(userId => {
-      if (userId === this.conversation.contact.id) {
-        this.onConversationChanged();
-      }
-    });
-  }
+    constructor(private messageService: MessageService, private renderer: Renderer2) {
+        this.subscription = this.messageService.getMessage().subscribe(userId => {
+            if (userId === this.conversation.contact.id) {
+                this.onConversationChanged();
+            }
+        });
+    }
 
-  async ngOnInit() {
-    this.contact = this.conversation.contact;
+    async ngOnInit() {
+        this.contact = this.conversation.contact;
 
     await rainbowSDK.im.getMessagesFromConversation(this.conversation, 50);
     this.onConversationChanged();
@@ -39,26 +39,33 @@ export class ConversationComponent implements OnInit, OnDestroy {
       }
     });
 
-  }
+    }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
-  onConversationChanged() {
-    setTimeout(() => {
-      const containerHeight = $('.conversation-' + this.conversation.dbId)[0].scrollHeight;
-      try {
-        this.conv.nativeElement.scrollTop = containerHeight;
-      } catch(err) {
-        console.error(err);
-      }
-    }, 100);
-  }
+    onConversationChanged() {
+        setTimeout(() => {
+            const containerHeight = $('.conversation-' + this.conversation.dbId)[0].scrollHeight;
+            try {
+                this.conv.nativeElement.scrollTop = containerHeight;
+            } catch (err) {
+                console.error(err);
+            }
+        }, 100);
+    }
 
-  onSend() {
-    rainbowSDK.im.sendMessageToConversation(this.conversation, this.message);
-    this.message = '';
-  }
+    onSend() {
+        rainbowSDK.im.sendMessageToConversation(this.conversation, this.message);
+        this.message = '';
+    }
 
+    onCall() {
+        if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
+            const callInAudio = rainbowSDK.webRTC.callInAudio(this.conversation.contact);
+        } else {
+            console.error('cant make a call')
+        }
+    }
 }
