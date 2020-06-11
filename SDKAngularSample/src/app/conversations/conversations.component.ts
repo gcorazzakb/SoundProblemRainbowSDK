@@ -37,12 +37,12 @@ export class ConversationsComponent implements OnInit {
     return oneToOneConversations;
   }
 
-  onConversationsListChanged = function onConversationsListChanged(event, conversation) {
+  onConversationsListChanged = function onConversationsListChanged(event) {
     this.conversations = this.getAllOneToOneConversations();
   };
 
-  onConnectionStateChangeEvent = function onConnectionStateChangeEvent(event, status) {
-    if (status === rainbowSDK.connection.RAINBOW_CONNECTIONCONNECTED) {
+  onConnectionStateChangeEvent = function onConnectionStateChangeEvent(event) {
+    if (event.originalEvent.detail === rainbowSDK.connection.RAINBOW_CONNECTIONCONNECTED) {
       this.conversations = this.getAllOneToOneConversations();
     } else {
       this.conversations = [];

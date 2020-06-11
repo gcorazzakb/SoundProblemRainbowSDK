@@ -20,7 +20,7 @@ export class PresenceComponent implements OnInit {
     $(document).on(rainbowSDK.presence.RAINBOW_ONPRESENCECHANGED, this.onPresenceChanged.bind(this));
   }
 
-  onConnectionStateChangeEvent = function onConnectionStateChangeEvent(event, status) {
+  onConnectionStateChangeEvent = function onConnectionStateChangeEvent(event) {
     if (status === rainbowSDK.connection.RAINBOW_CONNECTIONCONNECTED) {
       this.isConnected = true;
     } else {
@@ -29,8 +29,8 @@ export class PresenceComponent implements OnInit {
     }
   };
 
-  onPresenceChanged = function onPresenceChanged(event, json) {
-    this.presence = json.status;
+  onPresenceChanged = function onPresenceChanged(event) {
+    this.presence = event.originalEvent.detail.status;
   };
 
   online() {
