@@ -10,7 +10,7 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
-    "postinstall": "cp ./node_modules/rainbow-web-sdk//dist/lib/vendors-sdk.min.js ./src/assets/ && cp ./node_modules/rainbow-web-sdk//dist/lib/rainbow-sdk.min.js ./src/assets/"
+    "postinstall": "cp ./node_modules/rainbow-web-sdk/dist-legacy/vendors-sdk.min.js ./src/assets/ && cp ./node_modules/rainbow-web-sdk/dist-legacy/rainbow-sdk.min.js ./src/assets/"
   },
   "repository": {
     "type": "git",
